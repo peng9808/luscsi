@@ -43,7 +43,7 @@ enabled=0
 gpgcheck=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
 EOF
-    yum makecache > /dev/null 2>&1
+    #yum makecache > /dev/null 2>&1
     
     yum --disablerepo=* --enablerepo=ol8_baseos_latest install kernel-devel-4.18.0-513.5.1.el8_9.x86_64 -y > /dev/null 2>&1
     check_error "failed to install kernel-devel-4.18.0-513.5.1.el8_9.x86_64"
@@ -71,6 +71,9 @@ EOF
     yum remove kernel-devel-4.18.0-553.42.1.el8_10.x86_64 -y  > /dev/null 2>&1
     check_error "failed to remove kernel-devel-4.18.0-553"
 
+    info "installing required packages python36 libnl3-devel expect python2 bison flex libblkid-devel..."
+    yum install python36 libnl3-devel expect python2 bison flex libblkid-devel sysstat -y  > /dev/null 2>&1
+    check_error "failed to install python36 libnl3-devel expect python2 bison flex libblkid-devel"
 
     info "installing zfs-dkms-2.1.11-1.el8 packages..."
     tee /etc/yum.repos.d/zfs-linux.repo <<EOF > /dev/null 2>&1
@@ -80,10 +83,17 @@ baseurl=http://download.zfsonlinux.org/epel/8.7/x86_64/
 enabled=0
 gpgcheck=0
 EOF
-
     # note: zfs package is only needed when backend storage is zfs rather than ldiskfs
-    yum --disablerepo=* --enablerepo=zfs_linux install zfs-dkms-2.1.11-1.el8 -y  > /dev/null 2>&1
+    yum --disablerepo=* --enablerepo=zfs_linux install zfs-dkms-2.1.11-1.el8 libnvpair3 libuutil3 libzfs5 libzpool5 zfs-2.1.11 -y  > /dev/null 2>&1
     check_error "failed to install zfs-dkms-2.1.11-1.el8"
+
+    info "installing requird packages libyaml-devel..."
+    yum --disablerepo=* --enablerepo=powertools install libyaml-devel libmount-devel  -y  > /dev/null 2>&1
+    check_error "failed to install libyaml-devel libmount-devel"
+    
+    info "installing required packages corosync pacemaker pcs..."
+    yum --enablerepo=ha install -y corosync pacemaker pcs -y > /dev/null 2>&1
+    check_error "failed to install corosync pacemaker pcs"
 }
 
 function main
