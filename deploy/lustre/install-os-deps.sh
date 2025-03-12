@@ -99,11 +99,18 @@ EOF
 
 function main
 {
-    echo "This script automates the deployment of the Lustre 2.15.4 file system using ZFS as the storage backend."
+    echo "================================================================================================================"
+    echo "| NOTE: This script automates the deployment of the Lustre 2.15.4 file system using ZFS as the storage backend. |"
+    echo "================================================================================================================"
+    echo ""
 
-    ! grep -q "Rocky Linux release 8.9" /etc/redhat-release && error "os not match, this script is only for Rocky Linux release 8.9!"
+    ! grep -q "Rocky Linux release 8.9" /etc/redhat-release && error "os not match, this script is only for Rocky Linux release 8.9!
+        download link: https://dl.rockylinux.org/vault/rocky/8.9/isos/x86_64/Rocky-8.9-x86_64-minimal.iso
+    "
     
-    [ "4.18.0-513.5.1.el8_9.x86_64" != $(uname -r) ] && error "kernel version(`uname -r`) not match, required kernel is 4.18.0-513.5.1.el8_9.x86_64!"
+    [ "4.18.0-513.5.1.el8_9.x86_64" != $(uname -r) ] && error "kernel version(`uname -r`) not match, required kernel is 4.18.0-513.5.1.el8_9.x86_64!
+        download link: https://dl.rockylinux.org/vault/rocky/8.9/isos/x86_64/Rocky-8.9-x86_64-minimal.iso
+    "
 
     info "os info: `cat /etc/redhat-release` `uname -r` check passed..."
 
