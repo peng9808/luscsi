@@ -1,5 +1,6 @@
 #!/bin/bash
 # install-os-deps.sh is a helper to utility to install required packages for lustre
+#
 
 #set -e
 
@@ -31,7 +32,7 @@ function check_error
     fi
 }
 
-function online_install
+function online_install_deps
 {
     debug "install os packages online...."
     info "installing oracle linux 8 repo..."
@@ -98,13 +99,15 @@ EOF
 
 function main
 {
+    echo "This script automates the deployment of the Lustre 2.15.4 file system using ZFS as the storage backend."
+
     ! grep -q "Rocky Linux release 8.9" /etc/redhat-release && error "os not match, this script is only for Rocky Linux release 8.9!"
     
     [ "4.18.0-513.5.1.el8_9.x86_64" != $(uname -r) ] && error "kernel version(`uname -r`) not match, required kernel is 4.18.0-513.5.1.el8_9.x86_64!"
 
     info "os info: `cat /etc/redhat-release` `uname -r` check passed..."
 
-    online_install
+    online_install_deps
 }
 
 main
