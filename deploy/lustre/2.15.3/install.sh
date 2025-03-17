@@ -42,7 +42,7 @@ enabled=0
 gpgcheck=0
 EOF
     info "installing lustre from whamcloud public repo..."
-    yum --disablerepo=* --enablerepo=lustre-server install lustre-zfs-dkms lustre-osd-zfs-mount lustre-iokit lustre lustre-resource-agents -y > /dev/null 2>&1
+    yum --disablerepo=* --enablerepo=lustre-server install lustre-zfs-dkms lustre-osd-zfs-mount lustre-iokit lustre lustre-resource-agents kmod-lustre -y > /dev/null 2>&1
     check_error "failed to install lustre packages"
 
 info "lustre 2.15.4 installed successfully!"
