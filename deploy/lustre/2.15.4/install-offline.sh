@@ -19,6 +19,9 @@ PACKAGE_DIR="${package_dir:-./lustre-offline-rpms}"
 echo "install all packages under ${PACKAGE_DIR}"
 rpm -Uvh "${PACKAGE_DIR}"/*.rpm --force --nodeps || true
 
+echo "Install Compiler Tools under ${PACKAGE_DIR}/devtools_rpms"
+rpm -Uvh "${BASE_DIR}/devtools_rpms/"*.rpm --force --nodeps || true
+
 echo "install kernel-devel and kernel-headers packages under ${PACKAGE_DIR}/kernel-513"
 rpm -Uvh "${PACKAGE_DIR}/kernel-513/"*.rpm --force --nodeps || true
 
